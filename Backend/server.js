@@ -1,5 +1,4 @@
 import express from "express";
-import mysql from "mysql2";
 import cors from "cors";
 import bcrypt from "bcrypt";
 import dbConfig from "./config/db_config.js";
@@ -19,7 +18,7 @@ app.use(
 app.use(express.json());
 
 // Connexion à la base de données
-const db = mysql.createConnection(dbConfig);
+const db = dbConfig;
 
 db.connect((err) => {
   if (err) {

@@ -20,7 +20,7 @@ dist/
 build/
 */dist/
 */build/
-
+docker/data/
 # Vite
 .vite/
 vite.config.js.timestamp-*
@@ -42,8 +42,7 @@ coverage/
 # nyc test coverage
 .nyc_output/
 
-# Docker data
-docker/data/
+# Docker - logs seulement (garder les données DB)
 docker/logs/
 
 # OS generated files

@@ -37,6 +37,27 @@ Projet réalisé par un groupe de deux étudiants.
 - Page de connexion/login
 - Page de profil utilisateur
 
+## Structure du projet
+
+```
+MySpotify/
+├── Backend/              # API Node.js/Express
+│   ├── config/
+│   │   └── db_config.js  # Configuration base de données (à créer)
+│   ├── server.js         # Serveur principal
+│   └── package.json
+├── spotify/              # Application React
+│   ├── src/
+│   ├── package.json
+│   └── vite.config.js
+├── docker/               # Configuration Docker
+│   ├── docker-compose.yml
+│   ├── data/            # Données MySQL persistantes
+│   └── logs/            # Logs Docker
+└── README.md
+```
+
+
 ## Installation et démarrage
 
 ### Prérequis
@@ -52,9 +73,30 @@ Projet réalisé par un groupe de deux étudiants.
   docker-compose up --build
   ```
 
-2. **Installation et démarrage du backend**
+2. **Configuration du backend**
+  
+  a. Créer le fichier de configuration de la base de données :
   ```bash
   cd Backend
+  ```
+  
+  b. Créer le fichier `config/db_config.js` avec le contenu suivant :
+  ```javascript
+  // Backend/config/db_config.js
+  const mysql = require('mysql2');
+
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'spotify'
+  });
+
+  module.exports = connection;
+  ```
+  
+  c. Installer les dépendances et démarrer le serveur :
+  ```bash
   npm install
   npm start
   ```
@@ -85,3 +127,24 @@ Projet réalisé par un groupe de deux étudiants.
 ### Authentification
 - `POST /register` - Inscription d'un nouvel utilisateur
 - `POST /login` - Connexion utilisateur
+
+## Dépannage
+
+### Erreurs courantes
+
+1. **Erreur "Cannot find module './config/db_config.js'"**
+   - Vérifiez que le fichier `Backend/config/db_config.js` existe
+   - Créez-le manuellement si nécessaire (voir section Configuration)
+
+2. **Erreur de connexion à la base de données**
+   - Vérifiez que Docker est démarré : `docker ps`
+   - Redémarrez les conteneurs : `docker-compose down && docker-compose up`
+
+3. **Port déjà utilisé**
+   - Backend (8000) : `lsof -ti:8000 | xargs kill -9`
+   - Frontend (5173) : `lsof -ti:5173 | xargs kill -9`
+
+4. **Problèmes de dépendances**
+   - Supprimez `node_modules/` et `package-lock.json`
+   - Réinstallez : `npm install`
+
